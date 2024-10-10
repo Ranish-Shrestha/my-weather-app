@@ -28,7 +28,7 @@ public class WeatherController {
 	@GetMapping("/weather")
 	public String getWeather(@RequestParam("city") String city, Model model) {
 		// Create URL for OpenWeatherMap API request
-		String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid=" + apiKey + "&units=metric";
+		String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q="+ city +"&appid=" + apiKey;
 		
 		RestTemplate restTemplate = new RestTemplate();
 		WeatherResponse weatherResponse = restTemplate.getForObject(apiUrl, WeatherResponse.class);
@@ -49,10 +49,10 @@ public class WeatherController {
 			model.addAttribute("country", weatherResponse.getSys().getCountry());
 			model.addAttribute("weatherDescription", weatherResponse.getWeather().get(0).getDescription());
 			
-			model.addAttribute("temperature", weatherResponse.getMain().getTemp());
-			model.addAttribute("feels_like", weatherResponse.getMain().getFeels_like());
-			model.addAttribute("temp_max", weatherResponse.getMain().getTemp_max());
-			model.addAttribute("temp_min", weatherResponse.getMain().getTemp_min());
+			model.addAttribute("temperature", (int)(weatherResponse.getMain().getTemp() - 273.15));
+			model.addAttribute("feels_like", (int)(weatherResponse.getMain().getFeels_like() - 273.15));
+			model.addAttribute("temp_max", (int)(weatherResponse.getMain().getTemp_max() - 273.15));
+			model.addAttribute("temp_min", (int)(weatherResponse.getMain().getTemp_min() - 273.15));
 			model.addAttribute("humidity", weatherResponse.getMain().getHumidity());
 			
 			model.addAttribute("windSpeed", weatherResponse.getWind().getSpeed());
