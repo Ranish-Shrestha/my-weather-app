@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+   <head>
+      <title>⛅Weather App</title>
+      <!-- Bootstrap CSS -->
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+      <!-- Weather Icons CSS -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+      <link rel="stylesheet" type="text/css" href="/css/weather.css">
+      <style>
+         img {
+         max-height: 3rem;
+         margin-right: 0.5rem;
+         }
+      </style>
+   </head>
+   <body>
+      <div class="container">
+         <div class="row justify-content-center">
+            <div class="col-md-6">
+               <div class="card">
+                  <div class="card-body p-4">
+                     <div class="d-flex">
+                        <h6 class=" card-title flex-grow-1 card-text"><span th:text="${city}">City</span>, <span th:text="${country}">Country</span></h6>
+                        <h6 class="card-text"><span th:text="${time}">Time</span></h6>
+                     </div>
+                     <div class="d-flex flex-column text-center mt-3 mb-4">
+                        <span th:classappend="${weatherIcon} + ' weather-icon'"></span>
+                        <h6 class="display-4 mb-0 font-weight-bold"> <span th:text="${temperature}">Temperature</span>°C </h6>
+                        <span class="small card-text" style="color: #868B94"><span th:text="${weatherDescription}">Description</span></span>
+                        <span class="small card-text">
+	                        <span th:text="${temp_max}">TempMax</span>°C /
+	                        <span th:text="${temp_min}">TempMin</span>°C  Feels Like 
+	                        <span th:text="${feels_like}">FeelsLike</span>°C
+                        </span>
+                     </div>
+                     
+                     <div class="d-flex justify-content-around">
+                     
+                        <div >
+                           <div class="mb-2">
+                              <i class="wi wi-strong-wind wi-fw" style="font-size: xx-large; color: #868B94;"></i> 
+                              <span class="ms-1 card-text"> 
+                              	<span th:text="${windSpeed}">Wind Speed</span> m/s
+                              </span>
+                           </div>
+                           <div>
+                           	  <i class="wi wi-humidity wi-fw" style="font-size: xx-large; color: #868B94;"></i> 
+                              <span class="ms-1 card-text"> 
+                              	<span th:text="${humidity}">Humidity</span>%
+                              </span>
+                           </div>
+                        </div>
+                        
+                        <div >
+                           <div class="mb-2">
+                              <i class="wi wi-sunrise wi-fw" style="font-size: xx-large; color: #868B94;"></i> 
+                              <span class="ms-1 card-text"> 
+                              	<span th:text="${sunRise}">Sun Rise</span>
+                              </span>
+                           </div>
+                           <div>
+                           	  <i class="wi wi-sunset wi-fw" style="font-size: xx-large; color: #868B94;"></i> 
+                              <span class="ms-1 card-text"> 
+                              	<span th:text="${sunSet}">Sun Set</span>
+                              </span>
+                           </div>
+                           
+                        </div>
+                     </div>
+                     <div class="mt-4">
+                     	<a href="/" class="btn btn-secondary btn-block">Back</a>
+	                     <div th:if="${error}" class="alert alert-danger mt-3">
+	                        <p>Error: <span th:text="${error}"></span></p>
+	                     </div>
+                     </div>
+                     
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- Bootstrap JS and dependencies -->
+      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   </body>
+</html>

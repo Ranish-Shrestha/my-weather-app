@@ -1,0 +1,7 @@
+com\weatherapp\my_weather_app\model\WeatherResponse$Weather.class
+com\weatherapp\my_weather_app\model\WeatherResponse$Sys.class
+com\weatherapp\my_weather_app\controller\WeatherController.class
+com\weatherapp\my_weather_app\model\WeatherResponse$Main.class
+com\weatherapp\my_weather_app\MyWeatherAppApplication.class
+com\weatherapp\my_weather_app\model\WeatherResponse$Wind.class
+com\weatherapp\my_weather_app\model\WeatherResponse.class
