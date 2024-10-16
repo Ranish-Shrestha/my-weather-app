@@ -6,7 +6,6 @@ spec:
   selector:
     app: weather-app
   ports:
-    - protocol: TCP
-      port: 80
+    - port: 80
       targetPort: 8070
   type: LoadBalancer
