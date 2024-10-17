@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Docker Deploy To Container') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: '525d5560-7b33-4f05-84b8-9e8214be08f1') {
+                        bat "docker run -d --name weatherapp -p 8070:8070 ranishstha/weather:latest"
+                    }
+                }
+            }
+        }
+    }
+}

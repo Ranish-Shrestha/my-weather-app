@@ -1,0 +1,66 @@
+pipeline {
+    agent any
+    
+    tools {
+        jdk "jdk17"
+        maven "maven3"
+    }
+    
+    environment {
+        SCANNER_HOME = tool 'sonar-scanner'
+    }
+    
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git changelog: false, poll: false, url: 'https://github.com/Ranish-Shrestha/my_weather_app.git'
+            }
+        }
+        
+        stage('Compile') {
+            steps {
+                bat "mvn clean compile"
+            }
+        }
+        
+        stage('Sonarqube Analysis') {
+            steps {
+                bat """mvn clean verify sonar:sonar -Dsonar.host.url=http://localhost:9000/ \
+                    -Dsonar.login=squ_c878781a8ea5784e88f158211673efaa4c7de05f \
+                    -Dsonar.projectName="my-weather-app" \
+                    -Dsonar.projectKey=my-weather-app"""
+            }
+        }
+        
+        stage('OWASP SCAN') {
+            steps {
+                dependencyCheck additionalArguments: ' --scan ./', odcInstallation: 'DP' 
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+        
+        stage('Build Application') {
+            steps {
+                bat "mvn clean install"
+            }
+        }
+        
+        stage('Build & Push Docker Image') {
+            steps {
+                script {
+                    withDockerRegistry(credentialsId: '525d5560-7b33-4f05-84b8-9e8214be08f1') {
+                        bat "docker build -t weather:latest -f Dockerfile ."
+                        bat "docker tag weather:latest ranishstha/weather:latest"
+                        bat "docker push ranishstha/weather:latest"
+                    }
+                }
+            }
+        }
+        
+        stage('Trigger CD Pipeline') {
+            steps {
+                build job: "CD_Pipeline", wait: true
+            }
+        }
+    }
+}
