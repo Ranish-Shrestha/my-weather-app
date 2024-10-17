@@ -5,6 +5,7 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(azurerm_kubernetes_cluster.cluster.kube_config.0.cluster_ca_certificate)
 }
 
+# Kubernetes deployment
 resource "kubernetes_deployment" "weather_app" {
   metadata {
     name = "weather-app-deployment"
@@ -45,6 +46,7 @@ resource "kubernetes_deployment" "weather_app" {
   depends_on = [azurerm_kubernetes_cluster.cluster]
 }
 
+# Kubernetes service
 resource "kubernetes_service" "weather_app" {
   metadata {
     name = "weather-app-service"
@@ -66,3 +68,4 @@ resource "kubernetes_service" "weather_app" {
 
   depends_on = [kubernetes_deployment.weather_app]
 }
+

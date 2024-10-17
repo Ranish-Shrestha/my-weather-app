@@ -6,9 +6,6 @@ terraform {
     kubernetes = {
       source = "hashicorp/kubernetes"
     }
-    kubernetes-alpha = {
-      source = "hashicorp/kubernetes-alpha"
-    }
   }
 }
 
@@ -19,7 +16,7 @@ provider "azurerm" {
 
 # Create Resource Group
 resource "azurerm_resource_group" "group" {
-  name     = "rg-weather-app"
+  name     = "weather-app-group"
   location = "East US"
   tags = {
     "Terraform" = "true"
